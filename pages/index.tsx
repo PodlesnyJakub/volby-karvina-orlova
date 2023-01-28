@@ -7,7 +7,7 @@ import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'rec
 const fetcher = (url: string) => fetch(url).then(r => r.text()).then(data => JSON.parse(convert.xml2json(data)))
 
 export default function Home() {
-  const { data, error, isLoading } = useSWR<any, Error>("https://www.volby.cz/pls/prez2023/vysledky_kraj?kolo=2&nuts=CZ080", fetcher);
+  const { data, error, isLoading } = useSWR<any, Error>("https://www.volby.cz/pls/prez2023/vysledky_kraj?kolo=2&nuts=CZ080", fetcher, { refreshInterval: 1000 });
   if (isLoading) return <div />
 
   const karvina = data.elements[0].elements[0].elements.filter(obec => obec.attributes?.NUTS_OKRES === "CZ0803")[0].elements.filter(mesto => mesto.attributes?.CIS_OBEC === "598917")[0].elements
