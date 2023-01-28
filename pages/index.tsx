@@ -6,30 +6,37 @@ import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'rec
 
 const fetcher = (url: string) => fetch(url).then(r => r.text()).then(data => JSON.parse(convert.xml2json(data)))
 
+const style = {
+  display: "flex",
+  gap: "100px",
+  '@media (max-width: 1000px)': {
+    flexDirection: 'column',
+  },
+};
 export default function Home() {
   const { data, error, isLoading } = useSWR<any, Error>("https://www.volby.cz/pls/prez2023/vysledky_kraj?kolo=2&nuts=CZ080", fetcher, { refreshInterval: 1000 });
   if (isLoading) return <div />
 
-  const karvina = data.elements[0].elements[0].elements.filter(obec => obec.attributes?.NUTS_OKRES === "CZ0803")[0].elements.filter(mesto => mesto.attributes?.CIS_OBEC === "598917")[0].elements
-  const orlova = data.elements[0].elements[0].elements.filter(obec => obec.attributes?.NUTS_OKRES === "CZ0803")[0].elements.filter(mesto => mesto.attributes?.CIS_OBEC === "599069")[0].elements
+  const karvina = data.elements[0].elements[0].elements.filter((obec: any) => obec.attributes?.NUTS_OKRES === "CZ0803")[0].elements.filter((mesto: any) => mesto.attributes?.CIS_OBEC === "598917")[0].elements
+  const orlova = data.elements[0].elements[0].elements.filter((obec: any) => obec.attributes?.NUTS_OKRES === "CZ0803")[0].elements.filter((mesto: any) => mesto.attributes?.CIS_OBEC === "599069")[0].elements
 
   const chartDataKarvina = [{
     name: "Andrej Babiš",
-    hlasy: karvina.find(kandidat => kandidat.attributes?.PORADOVE_CISLO === "7").attributes?.HLASY
+    hlasy: karvina.find((kandidat: any) => kandidat.attributes?.PORADOVE_CISLO === "7").attributes?.HLASY
   },
   {
     name: "Pavel Petr",
-    hlasy: karvina.find(kandidat => kandidat.attributes?.PORADOVE_CISLO === "4").attributes?.HLASY
+    hlasy: karvina.find((kandidat: any) => kandidat.attributes?.PORADOVE_CISLO === "4").attributes?.HLASY
   }
   ]
 
   const chartDataOrlova = [{
     name: "Andrej Babiš",
-    hlasy: orlova.find(kandidat => kandidat.attributes?.PORADOVE_CISLO === "7").attributes?.HLASY
+    hlasy: orlova.find((kandidat: any) => kandidat.attributes?.PORADOVE_CISLO === "7").attributes?.HLASY
   },
   {
     name: "Pavel Petr",
-    hlasy: orlova.find(kandidat => kandidat.attributes?.PORADOVE_CISLO === "4").attributes?.HLASY
+    hlasy: orlova.find((kandidat: any) => kandidat.attributes?.PORADOVE_CISLO === "4").attributes?.HLASY
   }
   ]
   console.log(chartDataKarvina)
@@ -49,7 +56,7 @@ export default function Home() {
           {/* Pavel: {karvina_pavel}
             Babiš: {karvina_babis} */}
         </h1>
-        <div style={{ display: "flex", gap: "100px" }}>
+        <div style={style}>
           <div>
             <h2 style={{ marginBottom: "32px" }}>Karviná</h2>
             <BarChart
