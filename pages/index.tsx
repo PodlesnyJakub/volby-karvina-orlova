@@ -61,28 +61,28 @@ export default function Home() {
             <h2 style={{ marginBottom: "32px" }}>Karviná</h2>
             <BarChart
               width={500}
-              height={300}
+              height={500}
               data={chartDataKarvina}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis dataKey="hlasy" type="number" domain={[0, 20000]} />
               <Tooltip />
-              <Legend />
+
               <Bar dataKey="hlasy" fill="#8884d8" />
             </BarChart>
           </div><div>
             <h2 style={{ marginBottom: "32px" }}>Orlová</h2>
             <BarChart
               width={500}
-              height={300}
+              height={500}
               data={chartDataOrlova}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis dataKey="hlasy" type="number" domain={[0, 10000]} />
               <Tooltip />
-              <Legend />
+
               <Bar dataKey="hlasy" fill="#8884d8" />
             </BarChart>
           </div>
